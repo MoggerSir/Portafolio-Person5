@@ -25,10 +25,7 @@ export function MobileBottomNav({
     navigation.find((item) => item.id === activeScreen) ?? navigation[0];
 
   return (
-    <nav
-      className="mobile-bottom-nav lg:hidden"
-      aria-label="Navegación móvil"
-    >
+    <nav className="mobile-bottom-nav" aria-label="Navegación móvil">
       <div
         className="mobile-bottom-nav__panel"
         data-expanded={expanded ? 'true' : 'false'}

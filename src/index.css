@@ -941,19 +941,27 @@ body {
   cursor: default;
 }
 
-/* ── Mobile bottom navigation ── */
+/* ── Mobile bottom navigation (solo móvil / tablet) ── */
 
-.mobile-bottom-nav {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 60;
-  display: flex;
-  justify-content: center;
-  padding: 0 max(0.75rem, var(--safe-right)) max(0.65rem, calc(var(--safe-bottom) + 0.35rem))
-    max(0.75rem, var(--safe-left));
-  pointer-events: none;
+@media (min-width: 1024px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .mobile-bottom-nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 60;
+    display: flex;
+    justify-content: center;
+    padding: 0 max(0.75rem, var(--safe-right))
+      max(0.65rem, calc(var(--safe-bottom) + 0.35rem)) max(0.75rem, var(--safe-left));
+    pointer-events: none;
+  }
 }
 
 .mobile-bottom-nav__panel {

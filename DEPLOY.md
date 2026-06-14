@@ -132,6 +132,38 @@ npm run preview
 
 ---
 
+## Pantalla en blanco — causa y solución
+
+Si el sitio carga vacío, abre **Ver código fuente** y busca el script:
+
+```html
+<!-- ❌ Mal: GitHub sirve el código fuente sin compilar -->
+<script type="module" src="/src/main.tsx"></script>
+
+<!-- ✅ Bien: build de producción -->
+<script type="module" crossorigin src="/assets/index-XXXX.js"></script>
+```
+
+**Causa:** Pages está publicando la rama `main` (código fuente) en lugar del build.
+
+**Solución rápida (sin permiso `workflow` en el token):**
+
+```bash
+npm run deploy
+```
+
+Luego en GitHub → **Settings → Pages**:
+
+1. **Source:** Deploy from a branch
+2. **Branch:** `gh-pages` → carpeta `/ (root)`
+3. Guardar y esperar 1–2 minutos
+
+La rama `gh-pages` ya contiene solo el contenido de `dist/` (HTML, JS, CSS, CNAME).
+
+**Solución definitiva:** activar **GitHub Actions** como source (requiere PAT con scope `workflow`) y subir `.github/workflows/deploy-pages.yml`.
+
+---
+
 ## Alternativa: publicar en el repo antiguo
 
 Si prefieres mantener **portafolio-personal** como repo de Pages:

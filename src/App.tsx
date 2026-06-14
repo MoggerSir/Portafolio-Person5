@@ -1,4 +1,4 @@
-import { useState, type ReactElement } from 'react';
+import { useEffect, useState, type ReactElement } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { PortfolioRepository } from '@/core/data/PortfolioRepository';
 import { Header } from '@/components/layout/Header';
@@ -13,6 +13,7 @@ import {
   useScreenNavigation,
   type ScreenId,
 } from '@/hooks/useScreenNavigation';
+import { useMobileViewport } from '@/hooks/useMobileViewport';
 
 export class PortfolioApplication {
   private readonly repository: PortfolioRepository;
@@ -33,6 +34,13 @@ interface PortfolioViewProps {
 function PortfolioView({ repository }: PortfolioViewProps) {
   const { activeScreen, navigateTo } = useScreenNavigation(repository.navigation);
   const [mobileNavExpanded, setMobileNavExpanded] = useState(false);
+  const isMobileViewport = useMobileViewport();
+
+  useEffect(() => {
+    if (!isMobileViewport && mobileNavExpanded) {
+      setMobileNavExpanded(false);
+    }
+  }, [isMobileViewport, mobileNavExpanded]);
 
   const handleNavigate = (screenId: ScreenId) => {
     navigateTo(screenId);
@@ -48,7 +56,9 @@ function PortfolioView({ repository }: PortfolioViewProps) {
   return (
     <div
       className="app-shell relative overflow-hidden bg-persona-black"
-      data-mobile-nav={mobileNavExpanded ? 'expanded' : 'collapsed'}
+      data-mobile-nav={
+        isMobileViewport && mobileNavExpanded ? 'expanded' : 'collapsed'
+      }
     >
       <Header
         logo={repository.profile.initials}
@@ -70,14 +80,16 @@ function PortfolioView({ repository }: PortfolioViewProps) {
 
       <Footer profile={repository.profile} onNavigate={handleNavigate} />
 
-      <MobileBottomNav
-        navigation={repository.navigation}
-        activeScreen={activeScreen}
-        expanded={mobileNavExpanded}
-        profile={repository.profile}
-        onToggle={() => setMobileNavExpanded((expanded) => !expanded)}
-        onNavigate={handleNavigate}
-      />
+      {isMobileViewport && (
+        <MobileBottomNav
+          navigation={repository.navigation}
+          activeScreen={activeScreen}
+          expanded={mobileNavExpanded}
+          profile={repository.profile}
+          onToggle={() => setMobileNavExpanded((expanded) => !expanded)}
+          onNavigate={handleNavigate}
+        />
+      )}
     </div>
   );
 }
