@@ -1,0 +1,11 @@
+vamos a crear un nuveo portafolio web para mi como desarrollador web full stak.
+el objetivo es migrar toda la informacion relevante como proectos, links, .env, informacion sobre mi, mis proyectos etc de mi protafolio antigio que es este:
+/home/orb/Escritorio/viejo portfolio/Portafolio/
+
+el obejtivo es crear un portfolio con identidad visual fuerte, creativo y muy arternativo, totalmente disonate al resto usand como referencia esta imagen:
+/home/orb/Escritorio/Nuevo portafolio/public/assets/references/design-reference.png
+
+de tal forma que el nuevo portafolo tendra un acabado en ui de estilo el juego "persona 5" este nuevo proyecto sera una landing page que usara tylwin, html, react, y librerias especializadas para lograr animaciones complejas o unicas.
+este nuevo portafolio debe tener una estructura de carpetas ordenadas, seguira los principios del cleen code, debe tomar en cuenta siempre la optimizacion de la pagina web, debe tener una arquitecutera solida y modular, siemrpe sebe ebitar el codigo espageti, debe haber un main.
+siempre manejaremos el paradigma de la programacion orientada a obejtos para la contrucciond el portfolio. codigo limpio legible y mantenible.
+para fromas complejas botnes con formas raras o que no puedan ser recredas con tylwin o css, crea un .md conrequisitos de imagenes de elemtos necesarios para su contruccion.
