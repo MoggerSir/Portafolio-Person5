@@ -10,7 +10,7 @@ interface FooterProps {
 
 export function Footer({ profile, onNavigate }: FooterProps) {
   return (
-    <footer className="pointer-events-none fixed right-0 bottom-0 left-0 z-40 px-6 py-6 lg:px-10">
+    <footer className="app-footer pointer-events-none fixed right-0 bottom-0 left-0 z-40 hidden lg:block lg:px-10">
       <div className="mx-auto flex max-w-7xl items-end justify-between gap-4">
         <button
           type="button"

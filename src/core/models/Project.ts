@@ -12,6 +12,7 @@ export class Project {
     public readonly liveUrl: string | null,
     public readonly techStack: readonly string[],
     public readonly category: ProjectCategory,
+    public readonly privateRepository = false,
   ) {}
 
   get hasLiveDemo(): boolean {
@@ -19,6 +20,10 @@ export class Project {
   }
 
   get hasRepository(): boolean {
-    return this.repoUrl !== '#';
+    return !this.privateRepository && this.repoUrl !== '#';
+  }
+
+  get isPrivateRepository(): boolean {
+    return this.privateRepository;
   }
 }

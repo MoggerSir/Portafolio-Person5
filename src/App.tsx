@@ -1,8 +1,9 @@
-import type { ReactElement } from 'react';
+import { useState, type ReactElement } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { PortfolioRepository } from '@/core/data/PortfolioRepository';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { ScreenTransition } from '@/components/layout/ScreenTransition';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { ProjectsSection } from '@/components/sections/ProjectsSection';
@@ -31,6 +32,12 @@ interface PortfolioViewProps {
 
 function PortfolioView({ repository }: PortfolioViewProps) {
   const { activeScreen, navigateTo } = useScreenNavigation(repository.navigation);
+  const [mobileNavExpanded, setMobileNavExpanded] = useState(false);
+
+  const handleNavigate = (screenId: ScreenId) => {
+    navigateTo(screenId);
+    setMobileNavExpanded(false);
+  };
 
   const bioParagraphs = [
     '¡Hola! Soy estudiante de Ingeniería en Software, actualmente en el tercer cuatrimestre, y estoy buscando una oportunidad de prácticas profesionales donde pueda aportar y seguir creciendo.',
@@ -39,26 +46,38 @@ function PortfolioView({ repository }: PortfolioViewProps) {
   ];
 
   return (
-    <div className="relative h-screen overflow-hidden bg-persona-black">
+    <div
+      className="app-shell relative overflow-hidden bg-persona-black"
+      data-mobile-nav={mobileNavExpanded ? 'expanded' : 'collapsed'}
+    >
       <Header
         logo={repository.profile.initials}
         navigation={repository.navigation}
         activeScreen={activeScreen}
-        onNavigate={navigateTo}
+        onNavigate={handleNavigate}
       />
 
       <main className="relative h-full">
         <AnimatePresence mode="wait">
           <ScreenRenderer
             activeScreen={activeScreen}
-            onNavigate={navigateTo}
+            onNavigate={handleNavigate}
             repository={repository}
             bioParagraphs={bioParagraphs}
           />
         </AnimatePresence>
       </main>
 
-      <Footer profile={repository.profile} onNavigate={navigateTo} />
+      <Footer profile={repository.profile} onNavigate={handleNavigate} />
+
+      <MobileBottomNav
+        navigation={repository.navigation}
+        activeScreen={activeScreen}
+        expanded={mobileNavExpanded}
+        profile={repository.profile}
+        onToggle={() => setMobileNavExpanded((expanded) => !expanded)}
+        onNavigate={handleNavigate}
+      />
     </div>
   );
 }

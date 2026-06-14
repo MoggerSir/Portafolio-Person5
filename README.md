@@ -127,7 +127,24 @@ npm run lint     # ESLint
 
 ## Deploy
 
-Build estático en `dist/`. El archivo `public/CNAME` apunta el dominio personalizado para GitHub Pages.
+Build estático en `dist/`. Guía completa de migración y dominio: **[DEPLOY.md](./DEPLOY.md)**.
+
+### Resumen rápido
+
+1. Copia variables: `cp .env.example .env`
+2. Push a `main` → GitHub Actions despliega automáticamente (`.github/workflows/deploy-pages.yml`)
+3. En el repo **Settings → Pages**: source **GitHub Actions**, custom domain **`josmargalindo.com`**
+4. Quita el dominio del repo antiguo `portafolio-personal`
+5. DNS raíz → registros **A** de GitHub Pages; `www` → **CNAME** `MoggerSir.github.io`
+
+Archivos clave:
+
+| Archivo | Rol |
+|---------|-----|
+| `public/CNAME` | Dominio `josmargalindo.com` |
+| `public/.nojekyll` | Build Vite sin Jekyll |
+| `.env.example` | `VITE_SITE_URL`, `VITE_BASE_PATH` |
+| `.github/workflows/deploy-pages.yml` | CI/CD a GitHub Pages |
 
 ## Ajustes visuales
 

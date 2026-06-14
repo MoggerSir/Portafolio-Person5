@@ -18,7 +18,7 @@ export function AboutSection({
   courses,
 }: AboutSectionProps) {
   return (
-    <section className="screen-panel relative h-full overflow-y-auto overflow-x-hidden bg-persona-red px-6 pt-28 pb-28 lg:px-10">
+    <section className="screen-panel screen-panel--inset relative h-full overflow-y-auto overflow-x-hidden bg-persona-red lg:px-10">
       <HalftoneOverlay className="opacity-15" />
 
       <div className="relative z-10 mx-auto max-w-7xl">

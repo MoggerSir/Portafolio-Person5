@@ -107,6 +107,14 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
                   </div>
 
                   <div className="project-detail-modal__actions">
+                    {project.isPrivateRepository && (
+                      <span
+                        className="project-detail-modal__action project-detail-modal__action--muted"
+                        title="Repositorio privado"
+                      >
+                        Repositorio privado
+                      </span>
+                    )}
                     {project.hasRepository && (
                       <a
                         href={project.repoUrl}

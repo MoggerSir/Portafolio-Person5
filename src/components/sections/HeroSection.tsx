@@ -19,10 +19,10 @@ export function HeroSection({ profile, onNavigate }: HeroSectionProps) {
   const bioSegments = highlightBioText(profile.bio, profile.bioHighlights);
 
   return (
-    <section className="screen-panel relative h-full overflow-hidden">
+    <section className="screen-panel screen-panel--inset relative h-full overflow-y-auto overflow-x-hidden lg:overflow-hidden">
       <HeroBackground />
 
-      <div className="relative z-10 mx-auto grid h-full max-w-7xl grid-rows-[auto_auto] gap-8 px-6 pt-28 pb-28 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-1 lg:items-center lg:gap-10 lg:px-10">
+      <div className="relative z-10 mx-auto grid h-full max-w-7xl grid-rows-[auto_auto] gap-6 px-0 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-1 lg:items-center lg:gap-10 lg:px-10">
         <div className="flex flex-col gap-4 lg:gap-5">
           <motion.div
             className="relative z-10 w-fit"

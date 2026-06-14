@@ -9,7 +9,7 @@ interface ContactSectionProps {
 
 export function ContactSection({ profile }: ContactSectionProps) {
   return (
-    <section className="screen-panel relative flex h-full flex-col justify-center overflow-y-auto overflow-x-hidden bg-persona-black px-6 pt-28 pb-28 lg:px-10">
+    <section className="screen-panel screen-panel--inset relative flex h-full flex-col justify-center overflow-y-auto overflow-x-hidden bg-persona-black lg:px-10">
       <HalftoneOverlay variant="light" className="opacity-10" />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">

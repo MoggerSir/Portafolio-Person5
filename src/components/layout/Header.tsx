@@ -18,8 +18,8 @@ export function Header({
   onNavigate,
 }: HeaderProps) {
   return (
-    <header className="fixed top-0 right-0 left-0 z-50 px-6 pt-8 pb-4 lg:px-10 lg:pt-10">
-      <div className="mx-auto flex max-w-7xl items-start justify-between gap-6">
+    <header className="app-header fixed top-0 right-0 left-0 z-50 pb-4 lg:px-10 lg:pt-10">
+      <div className="mx-auto flex max-w-7xl items-start justify-between gap-4 lg:gap-6">
         <motion.button
           type="button"
           onClick={() => onNavigate('inicio')}
@@ -47,7 +47,10 @@ export function Header({
         </motion.button>
 
         <div className="flex items-start gap-4 lg:gap-6">
-          <nav aria-label="Navegación principal" className="pt-2 lg:pt-3">
+          <nav
+            aria-label="Navegación principal"
+            className="hidden pt-2 lg:block lg:pt-3"
+          >
             <ul className="flex flex-wrap justify-end gap-2 lg:gap-5">
               {navigation.map((item, index) => (
                 <motion.li
