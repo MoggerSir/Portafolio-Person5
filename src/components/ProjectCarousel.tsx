@@ -32,9 +32,6 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
   }, [controller]);
 
   const scheduleAutoplay = useCallback(function schedule(delay = AUTOPLAY_INTERVAL) {
-    // Continuous scrollLeft animation competes with native touch scrolling.
-    // On phones/tablets the carousel remains fully swipeable but does not autoplay.
-    if (window.matchMedia('(pointer: coarse)').matches) return;
     if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
     autoplayTimer.current = window.setTimeout(() => {
       const remainingPause = interactionPausedUntil.current - Date.now();
