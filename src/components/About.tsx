@@ -21,43 +21,78 @@ export function About({ skills }: { skills: readonly string[] }) {
     const section = sectionRef.current;
     if (!section) return;
 
-    gsap.from(section.querySelectorAll('.section-heading > *'), {
-      y: 44,
-      opacity: 0,
-      duration: 1,
-      stagger: .16,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: section, start: 'top 82%', once: true },
-    });
+    const revealEach = (selector: string, from: gsap.TweenVars, start = 'top 88%') => {
+      section.querySelectorAll<HTMLElement>(selector).forEach((element, index) => {
+        gsap.from(element, {
+          ...from,
+          scrollTrigger: {
+            trigger: element,
+            start,
+            end: 'top 66%',
+            scrub: .65,
+            invalidateOnRefresh: true,
+          },
+          delay: Math.min(index * .025, .1),
+        });
+      });
+    };
 
-    gsap.from(section.querySelectorAll('.shape-unit'), {
-      y: 72,
+    revealEach('.section-heading > *', {
+        y: 48,
+        opacity: 0,
+        ease: 'none',
+      });
+    revealEach('.shape-unit', {
+        y: 74,
+        opacity: 0,
+        scale: .93,
+        rotation: 1.2,
+        ease: 'power2.out',
+      }, 'top 90%');
+    revealEach('.capability', {
+        x: 26,
+        opacity: 0,
+        ease: 'power2.out',
+      }, 'top 91%');
+    gsap.from(section.querySelectorAll('.capability > span'), {
+      scale: .55,
+      rotation: -18,
       opacity: 0,
-      scale: .94,
-      rotation: (index) => index % 2 ? 1.5 : -1.5,
-      duration: 1.15,
-      stagger: .18,
-      ease: 'back.out(1.15)',
-      scrollTrigger: { trigger: '.organic-grid', start: 'top 84%', once: true },
+      duration: .62,
+      stagger: .1,
+      ease: 'back.out(1.8)',
+      scrollTrigger: {
+        trigger: section.querySelector('.capabilities-card'),
+        start: 'top 76%',
+        toggleActions: 'restart none none reset',
+      },
     });
-
-    gsap.from(section.querySelectorAll('.capability'), {
-      x: 28,
+    gsap.from(section.querySelectorAll('.capability > span svg'), {
+      scale: .4,
+      rotation: 24,
       opacity: 0,
-      duration: .72,
-      stagger: .11,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: '.capabilities-card', start: 'top 76%', once: true },
+      duration: .48,
+      stagger: .1,
+      ease: 'back.out(2)',
+      scrollTrigger: {
+        trigger: section.querySelector('.capabilities-card'),
+        start: 'top 76%',
+        toggleActions: 'restart none none reset',
+      },
     });
-
     gsap.from(section.querySelectorAll('.skills-card span'), {
-      y: 18,
-      scale: .82,
+      y: 20,
+      scale: .72,
+      rotation: -3,
       opacity: 0,
-      duration: .55,
-      stagger: .055,
+      duration: .5,
+      stagger: .065,
       ease: 'back.out(1.7)',
-      scrollTrigger: { trigger: '.skills-card', start: 'top 84%', once: true },
+      scrollTrigger: {
+        trigger: section.querySelector('.skills-card'),
+        start: 'top 82%',
+        toggleActions: 'restart none none reset',
+      },
     });
   });
 

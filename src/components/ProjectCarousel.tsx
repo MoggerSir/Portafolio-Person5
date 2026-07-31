@@ -1,13 +1,19 @@
 import { ArrowLeft, ArrowRight, OpenNewWindow } from 'iconoir-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Project } from '../core/models';
+import { useGsapContext } from '../hooks/useGsapContext';
 import { ProjectCarouselController } from '../services/ProjectCarouselController';
 import { ProjectCaseStudy } from './ProjectCaseStudy';
 
 const AUTOPLAY_INTERVAL = 10_000;
 const AUTOPLAY_TRANSITION_DURATION = 1.5;
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function ProjectCarousel({ projects }: { projects: readonly Project[] }) {
+  const sectionRef = useRef<HTMLElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -18,6 +24,53 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
   const scrollingByAnimation = useRef(false);
   const scrollFrame = useRef<number | null>(null);
   const controller = useMemo(() => new ProjectCarouselController(projects.length), [projects.length]);
+
+  useGsapContext(sectionRef, () => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const replay = {
+      trigger: section,
+      start: 'top 80%',
+      toggleActions: 'restart none none reset',
+    };
+    const timeline = gsap.timeline({ scrollTrigger: replay });
+
+    timeline
+      .from(section.querySelectorAll('.section-heading > *'), {
+        y: 46,
+        opacity: 0,
+        duration: .9,
+        stagger: .14,
+        ease: 'power3.out',
+      })
+      .from(section.querySelector('.carousel-stage'), {
+        y: 42,
+        opacity: 0,
+        duration: .8,
+        ease: 'power3.out',
+      }, '-=.5')
+      .from(section.querySelectorAll('.project-card img'), {
+        clipPath: 'inset(0 100% 0 0 round 32px)',
+        scale: 1.12,
+        opacity: 0,
+        duration: 1.05,
+        stagger: .1,
+        ease: 'power4.out',
+      }, '-=.45')
+      .from(section.querySelectorAll('.project-index, .project-content, .project-link'), {
+        y: 28,
+        opacity: 0,
+        duration: .72,
+        stagger: .055,
+        ease: 'back.out(1.25)',
+      }, '-=.72')
+      .from(section.querySelector('.carousel-controls'), {
+        scaleX: .82,
+        opacity: 0,
+        duration: .7,
+        ease: 'power3.out',
+      }, '-=.5');
+  });
 
   const animate = useCallback((index: number, duration = 0.85) => {
     const track = trackRef.current;
@@ -94,7 +147,7 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
   };
 
   return (
-    <section className="projects section-shell" id="trabajo">
+    <section className="projects section-shell" id="trabajo" ref={sectionRef}>
       <div className="section-heading">
         <div><p className="kicker">MI TRABAJO</p><h2>Proyectos destacados</h2></div>
         <p>Productos reales en producción que nacieron de ideas espontáneas y se convirtieron en mi trabajo más serio.</p>

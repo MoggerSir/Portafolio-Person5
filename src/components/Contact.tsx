@@ -13,41 +13,60 @@ export function Contact({ profile }: { profile: Profile }) {
   useGsapContext(sectionRef, () => {
     const section = sectionRef.current;
     if (!section) return;
-    const replay = { start: 'top 78%', once: true };
+    const revealEach = (selector: string, from: gsap.TweenVars, start = 'top 88%') => {
+      section.querySelectorAll<HTMLElement>(selector).forEach((element) => {
+        gsap.from(element, {
+          ...from,
+          scrollTrigger: {
+            trigger: element,
+            start,
+            end: 'top 67%',
+            scrub: .7,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+    };
 
     gsap.from(section.querySelector('.contact-orb'), {
-      scale: .55,
-      x: 100,
-      opacity: 0,
-      rotation: 12,
-      duration: 1.5,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: section, ...replay },
+        scale: .55,
+        x: 100,
+        opacity: 0,
+        rotation: 12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 86%',
+          end: 'top 50%',
+          scrub: .8,
+          invalidateOnRefresh: true,
+        },
+      });
+    revealEach(':scope > .kicker, :scope > h2', {
+        y: 56,
+        opacity: 0,
+        ease: 'power2.out',
+      });
+    section.querySelectorAll<HTMLElement>('.contact-option').forEach((element, index) => {
+      gsap.from(element, {
+        x: index % 2 ? 42 : -42,
+        scale: .92,
+        opacity: 0,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 90%',
+          end: 'top 69%',
+          scrub: .7,
+          invalidateOnRefresh: true,
+        },
+      });
     });
-    gsap.from(section.querySelectorAll(':scope > .kicker, :scope > h2'), {
-      y: 54,
-      opacity: 0,
-      duration: 1,
-      stagger: .16,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: section, ...replay },
-    });
-    gsap.from(section.querySelectorAll('.contact-option'), {
-      y: 42,
-      scale: .94,
-      opacity: 0,
-      duration: .9,
-      stagger: .14,
-      ease: 'back.out(1.25)',
-      scrollTrigger: { trigger: '.contact-actions', start: 'top 88%', once: true },
-    });
-    gsap.from(section.querySelector('.footer-meta'), {
-      y: 24,
-      opacity: 0,
-      duration: .8,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: '.footer-meta', start: 'top 96%', once: true },
-    });
+    revealEach('.footer-meta > *', {
+        y: 22,
+        opacity: 0,
+        ease: 'power2.out',
+      }, 'top 94%');
   });
 
   return (
