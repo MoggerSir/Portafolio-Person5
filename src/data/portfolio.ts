@@ -54,7 +54,7 @@ const source: PortfolioSource = {
         '/images/cases/barry-ticket.webp',
       ],
     }),
-    new Project('sticker-rip', 'StickerRip', 'Herramienta local-first', 'Extrae stickers de TikTok y prepara packs para WhatsApp o Telegram, sin rastreadores.', '/images/sticker-rip.webp', ['React', 'Node.js', 'FFmpeg', 'Go'], 'ruby', undefined, 'https://github.com/MoggerSir/StikerRip', {
+    new Project('sticker-rip', 'StickerRip', 'Herramienta local-first', 'Extrae stickers de TikTok y prepara packs para WhatsApp o Telegram, sin rastreadores.', '/images/sticker-rip.webp', ['React', 'Node.js', 'FFmpeg', 'Go'], 'ruby', 'https://stikerip.com/', 'https://github.com/MoggerSir/StikerRip', {
       overview: 'Herramienta local que detecta stickers de TikTok, los procesa por lotes y genera archivos compatibles con WhatsApp y Telegram. Puede descargar paquetes o vincular WhatsApp mediante un QR creado en la propia computadora.',
       problem: 'Extraer stickers desde TikTok exige copiar recursos, convertir formatos y respetar límites específicos de cada mensajería. Las herramientas remotas además obligan a entregar archivos y sesiones a terceros.',
       process: [
@@ -96,7 +96,7 @@ const source: PortfolioSource = {
         '/images/cases/music-playlist.webp',
       ],
     }),
-    new Project('campus-connect', 'Campus Connect', 'Red social universitaria', 'Plataforma mobile-first para comunidad, marketplace y conversación dentro del campus.', '/images/campus-connect.webp', ['Next.js', 'Go', 'PostgreSQL', 'Redis'], 'coral', undefined, undefined, {
+    new Project('campus-connect', 'Campus Connect', 'Red social universitaria', 'Plataforma mobile-first para comunidad, marketplace y conversación dentro del campus.', '/images/cases/campus-home.webp', ['Next.js', 'Go', 'PostgreSQL', 'Redis'], 'coral', undefined, undefined, {
       overview: 'Red social mobile-first para la comunidad de UPQROO. Reúne publicaciones, conversación, perfiles y espacios de marketplace dentro de un producto pensado alrededor de la vida diaria del campus.',
       problem: 'La información universitaria, las ventas y las conversaciones suelen repartirse entre grupos cerrados y canales difíciles de consultar. Campus Connect propone un espacio común con feed organizado, identidad estudiantil y crecimiento controlado.',
       process: [
@@ -117,7 +117,7 @@ const source: PortfolioSource = {
         '/images/cases/campus-search.webp',
       ],
     }),
-    new Project('cafe-profesor', 'Café del Profesor', 'Mockup de producto', 'Menú digital premium pensado para descubrir, decidir y ordenar cómodamente desde el móvil.', '/images/cafe-profesor.webp', ['Vite', 'Tailwind', 'GSAP', 'Lenis'], 'wine', undefined, undefined, {
+    new Project('cafe-profesor', 'Café del Profesor', 'Mockup de producto', 'Menú digital premium pensado para descubrir, decidir y ordenar cómodamente desde el móvil.', '/images/cases/cafe-hero.webp', ['Vite', 'Tailwind', 'GSAP', 'Lenis'], 'wine', undefined, undefined, {
       overview: 'Prototipo mobile-first de un menú digital para Café del Profesor. Organiza desayunos, platos, postres y bebidas en categorías navegables, con favoritos visuales, selección de sucursal y detalles de cada producto.',
       problem: 'Los menús extensos son difíciles de recorrer desde un teléfono y suelen ocultar horarios, ubicación o productos destacados. El prototipo prioriza descubrimiento rápido, lectura cómoda y decisiones sin fricción.',
       process: [
