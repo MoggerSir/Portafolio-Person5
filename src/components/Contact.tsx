@@ -13,7 +13,7 @@ export function Contact({ profile }: { profile: Profile }) {
   useGsapContext(sectionRef, () => {
     const section = sectionRef.current;
     if (!section) return;
-    const replay = { start: 'top 78%', toggleActions: 'restart none none reset' };
+    const replay = { start: 'top 78%', once: true };
 
     gsap.from(section.querySelector('.contact-orb'), {
       scale: .55,
@@ -39,14 +39,14 @@ export function Contact({ profile }: { profile: Profile }) {
       duration: .9,
       stagger: .14,
       ease: 'back.out(1.25)',
-      scrollTrigger: { trigger: '.contact-actions', start: 'top 88%', toggleActions: 'restart none none reset' },
+      scrollTrigger: { trigger: '.contact-actions', start: 'top 88%', once: true },
     });
     gsap.from(section.querySelector('.footer-meta'), {
       y: 24,
       opacity: 0,
       duration: .8,
       ease: 'power2.out',
-      scrollTrigger: { trigger: '.footer-meta', start: 'top 96%', toggleActions: 'restart none none reset' },
+      scrollTrigger: { trigger: '.footer-meta', start: 'top 96%', once: true },
     });
   });
 
@@ -54,7 +54,7 @@ export function Contact({ profile }: { profile: Profile }) {
     <footer className="contact section-shell" id="contacto" ref={sectionRef}>
       <div className="contact-orb" />
       <p className="kicker">¿TIENES UNA IDEA?</p>
-      <h2>Hagamos que<br /><span>se sienta increíble.</span></h2>
+      <h2>Cuéntame<br /><span>qué tienes en mente.</span></h2>
       <div className="contact-actions" aria-label="Opciones de contacto">
         <a className="contact-option contact-option-mail" href={`mailto:${profile.email}`}>
           <Mail />

@@ -41,6 +41,8 @@ export function Hero({ profile }: { profile: Profile }) {
               alt="Josmar Francisco Galindo Ocampo"
               width="720"
               height="900"
+              decoding="async"
+              fetchPriority="high"
             />
           </div>
 

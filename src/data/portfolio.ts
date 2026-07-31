@@ -5,7 +5,7 @@ const source: PortfolioSource = {
   profile: new Profile(
     'Josmar Galindo',
     'Estudiante de Ingeniería en Software',
-    'Transformo problemas reales en soluciones prácticas y fáciles de usar. Cuido especialmente la interfaz, los detalles visuales y la experiencia para que cada proyecto no solo funcione bien, sino que también tenga una identidad propia.',
+    'Me enfoco en resolver problemas reales con soluciones prácticas y fáciles de usar, cuidando especialmente su atractivo visual. Me gusta ponerle cariño a los detalles y a las sensaciones de uso para crear interfaces cómodas y una experiencia única en cada proyecto: trabajos que no solo funcionan bien, sino que también tienen identidad propia.',
     'josmar.galindo.dev@gmail.com',
     'https://github.com/MoggerSir',
     'https://linkedin.com/in/josmar-galindo',

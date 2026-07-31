@@ -4,6 +4,9 @@ import type { Project } from '../core/models';
 import { ProjectCarouselController } from '../services/ProjectCarouselController';
 import { ProjectCaseStudy } from './ProjectCaseStudy';
 
+const AUTOPLAY_INTERVAL = 10_000;
+const AUTOPLAY_TRANSITION_DURATION = 1.5;
+
 export function ProjectCarousel({ projects }: { projects: readonly Project[] }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -28,7 +31,10 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
     setActiveIndex(index);
   }, [controller]);
 
-  const scheduleAutoplay = useCallback(function schedule(delay = 5600) {
+  const scheduleAutoplay = useCallback(function schedule(delay = AUTOPLAY_INTERVAL) {
+    // Continuous scrollLeft animation competes with native touch scrolling.
+    // On phones/tablets the carousel remains fully swipeable but does not autoplay.
+    if (window.matchMedia('(pointer: coarse)').matches) return;
     if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
     autoplayTimer.current = window.setTimeout(() => {
       const remainingPause = interactionPausedUntil.current - Date.now();
@@ -37,8 +43,8 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
         return;
       }
       const state = controller.next();
-      animate(state.activeIndex, 4.8);
-      schedule(5600);
+      animate(state.activeIndex, AUTOPLAY_TRANSITION_DURATION);
+      schedule(AUTOPLAY_INTERVAL);
     }, delay);
   }, [animate, controller]);
 
@@ -131,7 +137,15 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
                 }
               }}
             >
-              <img src={project.image} alt="" width="720" height="520" loading={index > 1 ? 'lazy' : 'eager'} />
+              <img
+                src={project.image}
+                alt=""
+                width="720"
+                height="520"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                fetchPriority={index === 0 ? 'high' : 'low'}
+              />
               <div className="project-shade" />
               <div className="project-index">0{index + 1}</div>
               <div className="project-content">

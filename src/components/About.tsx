@@ -27,7 +27,7 @@ export function About({ skills }: { skills: readonly string[] }) {
       duration: 1,
       stagger: .16,
       ease: 'power3.out',
-      scrollTrigger: { trigger: section, start: 'top 82%', toggleActions: 'restart none none reset' },
+      scrollTrigger: { trigger: section, start: 'top 82%', once: true },
     });
 
     gsap.from(section.querySelectorAll('.shape-unit'), {
@@ -38,7 +38,7 @@ export function About({ skills }: { skills: readonly string[] }) {
       duration: 1.15,
       stagger: .18,
       ease: 'back.out(1.15)',
-      scrollTrigger: { trigger: '.organic-grid', start: 'top 84%', toggleActions: 'restart none none reset' },
+      scrollTrigger: { trigger: '.organic-grid', start: 'top 84%', once: true },
     });
 
     gsap.from(section.querySelectorAll('.capability'), {
@@ -47,7 +47,7 @@ export function About({ skills }: { skills: readonly string[] }) {
       duration: .72,
       stagger: .11,
       ease: 'power3.out',
-      scrollTrigger: { trigger: '.capabilities-card', start: 'top 76%', toggleActions: 'restart none none reset' },
+      scrollTrigger: { trigger: '.capabilities-card', start: 'top 76%', once: true },
     });
 
     gsap.from(section.querySelectorAll('.skills-card span'), {
@@ -57,7 +57,7 @@ export function About({ skills }: { skills: readonly string[] }) {
       duration: .55,
       stagger: .055,
       ease: 'back.out(1.7)',
-      scrollTrigger: { trigger: '.skills-card', start: 'top 84%', toggleActions: 'restart none none reset' },
+      scrollTrigger: { trigger: '.skills-card', start: 'top 84%', once: true },
     });
   });
 

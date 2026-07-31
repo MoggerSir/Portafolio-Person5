@@ -63,6 +63,7 @@ export class ProjectCarouselController {
 
   followScroll(viewport: HTMLElement, cards: readonly HTMLElement[]): number {
     const viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
+    const useLightweightTouchMode = window.matchMedia('(pointer: coarse)').matches;
     let nearestIndex = 0;
     let nearestDistance = Number.POSITIVE_INFINITY;
 
@@ -77,15 +78,17 @@ export class ProjectCarouselController {
         nearestDistance = Math.abs(pixelDistance);
       }
 
-      gsap.to(card, {
-        y: Math.min(Math.pow(absoluteDistance, 1.35) * 24, 54),
-        rotation: Math.max(-7, Math.min(7, distance * 3.6)),
-        scale: Math.max(.88, 1 - absoluteDistance * .075),
-        opacity: Math.max(.48, 1 - absoluteDistance * .24),
-        duration: .46,
-        ease: 'power3.out',
-        overwrite: 'auto',
-      });
+      if (!useLightweightTouchMode) {
+        gsap.to(card, {
+          y: Math.min(Math.pow(absoluteDistance, 1.35) * 24, 54),
+          rotation: Math.max(-7, Math.min(7, distance * 3.6)),
+          scale: Math.max(.88, 1 - absoluteDistance * .075),
+          opacity: Math.max(.48, 1 - absoluteDistance * .24),
+          duration: .46,
+          ease: 'power3.out',
+          overwrite: 'auto',
+        });
+      }
     });
 
     this.activeIndex = nearestIndex;
