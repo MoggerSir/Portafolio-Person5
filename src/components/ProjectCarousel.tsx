@@ -9,6 +9,8 @@ import { ProjectCaseStudy } from './ProjectCaseStudy';
 
 const AUTOPLAY_INTERVAL = 10_000;
 const AUTOPLAY_TRANSITION_DURATION = 1.5;
+const HOVER_FOCUS_DELAY = 450;
+const HOVER_FOCUS_TRANSITION_DURATION = 1.35;
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +25,7 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
   const autoplayTimer = useRef<number | null>(null);
   const scrollingByAnimation = useRef(false);
   const scrollFrame = useRef<number | null>(null);
+  const hoverFocusTimer = useRef<number | null>(null);
   const controller = useMemo(() => new ProjectCarouselController(projects.length), [projects.length]);
 
   useGsapContext(sectionRef, () => {
@@ -105,6 +108,7 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
     return () => {
       if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
       if (resumeTimer.current !== null) window.clearTimeout(resumeTimer.current);
+      if (hoverFocusTimer.current !== null) window.clearTimeout(hoverFocusTimer.current);
       if (scrollFrame.current !== null) window.cancelAnimationFrame(scrollFrame.current);
       controller.destroy();
     };
@@ -135,14 +139,23 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
 
   const focusOnHover = (index: number) => {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (hoverFocusTimer.current !== null) window.clearTimeout(hoverFocusTimer.current);
     if (index === controller.state.activeIndex) return;
-    interactionPausedUntil.current = Number.POSITIVE_INFINITY;
-    if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
-    animate(index, 0.65);
+    // Wait for the cursor to settle on the card before gliding to it, so
+    // sweeping across the row doesn't yank the carousel between cards.
+    hoverFocusTimer.current = window.setTimeout(() => {
+      interactionPausedUntil.current = Number.POSITIVE_INFINITY;
+      if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
+      animate(index, HOVER_FOCUS_TRANSITION_DURATION);
+    }, HOVER_FOCUS_DELAY);
   };
 
   const releaseHoverFocus = () => {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (hoverFocusTimer.current !== null) {
+      window.clearTimeout(hoverFocusTimer.current);
+      hoverFocusTimer.current = null;
+    }
     resumeMotion();
   };
 
