@@ -11,6 +11,30 @@ const source: PortfolioSource = {
     'https://linkedin.com/in/josmar-galindo',
   ),
   projects: [
+    new Project('nexo-idiomas', 'Nexo Idiomas', 'Proyecto integrador · UPQROO', 'Launcher modular que nace de una entrevista real con la Dirección de Idiomas y automatiza el perfilado de docentes de inglés.', '/images/nexo-idiomas.webp', ['React', 'FastAPI', 'PostgreSQL', 'PaddleOCR'], 'gold', 'https://idiomas.josmargalindo.com/', undefined, {
+      overview: 'Nexo Idiomas es un launcher modular de herramientas administrativas para la Dirección de Idiomas de la UPQROO. La propuesta nació de entrevistar directamente al Lic. Heddbel G. Santos Gutiérrez, Director de Idiomas, y de investigar a fondo su proceso real para diseñarle una solución a la medida de sus necesidades, no una plantilla genérica.',
+      problem: 'Recursos Humanos entrega un único drive con todas las postulaciones de la universidad sin segmentar por carrera, así que el Director debe rastrear a mano los perfiles de inglés entre decenas de documentos, descargar e imprimir cada currículum, evaluarlo sin criterios estandarizados y contactar a los aspirantes por canales personales que no dejan rastro. Además mantiene un doble archivo físico y digital, y no existe una bolsa de talento: cada convocatoria empieza desde cero. Detectamos estas causas raíz a partir de la entrevista y del análisis AS-IS del proceso, y las documentamos en una Definición y una Especificación de Requerimientos que el propio Director revisó, avaló y firmó.',
+      process: [
+        'Entrevisté junto a mi equipo al Director de Idiomas para levantar la problemática real, mapeamos el proceso actual en un diagrama AS-IS y diseñamos el TO-BE de la solución propuesta.',
+        'Investigamos a fondo para encontrar el enfoque técnico ideal: un pipeline documental multimodal (parsers para PDF/Word/Excel, OCR con PaddleOCR y clasificación en cascada con reglas, modelo ligero y LLM como último recurso) que automatiza justo las tareas más tediosas del Director.',
+        'Definimos los requerimientos en sus tres tipos —funcionales, no funcionales y de dominio— junto con sus criterios de aceptación y método de prueba, y los agrupamos en una Matriz de Requerimientos completa.',
+        'Construí el mockup navegable (módulos de importación, evaluación tipo feed, historial y bolsa de talento) siguiendo la arquitectura tipo launcher y los casos de uso definidos.',
+        'Validamos la propuesta con el cliente real: el Lic. Heddbel revisó la Definición de Requerimientos y la firmó de conformidad, confirmando que la solución sí resuelve su problema y le agiliza el trabajo.',
+      ],
+      stackDecisions: [
+        { technology: 'React + TypeScript + Vite', reason: 'Interfaz tipada para tarjetas de evaluación, filtros y formularios sin errores silenciosos en los contratos de datos.' },
+        { technology: 'FastAPI + Pydantic', reason: 'Endpoints tipados con documentación automática para carga de ZIP, jobs de procesamiento, revisión y expedientes.' },
+        { technology: 'PyMuPDF, python-docx, openpyxl', reason: 'Lectura especializada de PDF, Word y Excel para reconstruir la estructura real de cada documento del aspirante.' },
+        { technology: 'PaddleOCR + OpenCV', reason: 'OCR multilingüe y preprocesamiento de imagen para currículums escaneados, con Tesseract como alternativa local.' },
+        { technology: 'PostgreSQL + MinIO', reason: 'Base de datos relacional para el historial de aspirantes y almacenamiento de expedientes originales compatible con S3.' },
+      ],
+      gallery: [
+        '/images/cases/nexo-import.webp',
+        '/images/cases/nexo-aspirantes.webp',
+        '/images/cases/nexo-tobe.webp',
+        '/images/cases/nexo-aprobacion.webp',
+      ],
+    }),
     new Project('larper-clothes', 'Larper Clothes', 'E-commerce conceptual', 'Moda alternativa presentada como una experiencia editorial, rápida y enfocada en producto.', '/images/larper-clothes.webp', ['Astro', 'React', 'GSAP', 'Three.js'], 'wine', 'https://larperchlothes.larpmusic.com.mx/', undefined, {
       overview: 'Una tienda editorial de ropa de segunda mano creada para estudiantes de Cancún. Cada prenda es única e incluye precio, talla, color, condición e historia, presentada mediante una experiencia visual cercana a una campaña de moda.',
       problem: 'La ropa de segunda mano suele publicarse en catálogos improvisados donde es difícil comparar estado, medidas y disponibilidad. El proyecto organiza inventario limitado y le da suficiente contexto visual a cada pieza para reducir dudas antes de contactar.',

@@ -13,6 +13,7 @@ export function Contact({ profile }: { profile: Profile }) {
   useGsapContext(sectionRef, () => {
     const section = sectionRef.current;
     if (!section) return;
+    const isMobile = window.matchMedia('(max-width: 699px)').matches;
     const revealEach = (selector: string, from: gsap.TweenVars, start = 'top 88%') => {
       section.querySelectorAll<HTMLElement>(selector).forEach((element) => {
         gsap.from(element, {
@@ -20,8 +21,8 @@ export function Contact({ profile }: { profile: Profile }) {
           scrollTrigger: {
             trigger: element,
             start,
-            end: 'top 67%',
-            scrub: .7,
+            end: isMobile ? 'top 43%' : 'top 67%',
+            scrub: isMobile ? 1.4 : .7,
             invalidateOnRefresh: true,
           },
         });
@@ -37,8 +38,8 @@ export function Contact({ profile }: { profile: Profile }) {
         scrollTrigger: {
           trigger: section,
           start: 'top 86%',
-          end: 'top 50%',
-          scrub: .8,
+          end: isMobile ? 'top 38%' : 'top 50%',
+          scrub: isMobile ? 1.45 : .8,
           invalidateOnRefresh: true,
         },
       });
@@ -56,8 +57,8 @@ export function Contact({ profile }: { profile: Profile }) {
         scrollTrigger: {
           trigger: element,
           start: 'top 90%',
-          end: 'top 69%',
-          scrub: .7,
+          end: isMobile ? 'top 44%' : 'top 69%',
+          scrub: isMobile ? 1.4 : .7,
           invalidateOnRefresh: true,
         },
       });

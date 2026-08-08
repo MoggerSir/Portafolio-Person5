@@ -1,4 +1,4 @@
-export type ProjectTone = 'ember' | 'ruby' | 'wine' | 'coral';
+export type ProjectTone = 'ember' | 'ruby' | 'wine' | 'coral' | 'gold';
 
 export interface StackDecision {
   readonly technology: string;

@@ -20,6 +20,7 @@ export function About({ skills }: { skills: readonly string[] }) {
   useGsapContext(sectionRef, () => {
     const section = sectionRef.current;
     if (!section) return;
+    const isMobile = window.matchMedia('(max-width: 699px)').matches;
 
     const revealEach = (selector: string, from: gsap.TweenVars, start = 'top 88%') => {
       section.querySelectorAll<HTMLElement>(selector).forEach((element, index) => {
@@ -28,8 +29,8 @@ export function About({ skills }: { skills: readonly string[] }) {
           scrollTrigger: {
             trigger: element,
             start,
-            end: 'top 66%',
-            scrub: .65,
+            end: isMobile ? 'top 42%' : 'top 66%',
+            scrub: isMobile ? 1.35 : .65,
             invalidateOnRefresh: true,
           },
           delay: Math.min(index * .025, .1),
@@ -58,8 +59,8 @@ export function About({ skills }: { skills: readonly string[] }) {
       scale: .55,
       rotation: -18,
       opacity: 0,
-      duration: .62,
-      stagger: .1,
+      duration: isMobile ? .82 : .62,
+      stagger: isMobile ? .13 : .1,
       ease: 'back.out(1.8)',
       scrollTrigger: {
         trigger: section.querySelector('.capabilities-card'),
@@ -71,8 +72,8 @@ export function About({ skills }: { skills: readonly string[] }) {
       scale: .4,
       rotation: 24,
       opacity: 0,
-      duration: .48,
-      stagger: .1,
+      duration: isMobile ? .68 : .48,
+      stagger: isMobile ? .13 : .1,
       ease: 'back.out(2)',
       scrollTrigger: {
         trigger: section.querySelector('.capabilities-card'),
@@ -85,8 +86,8 @@ export function About({ skills }: { skills: readonly string[] }) {
       scale: .72,
       rotation: -3,
       opacity: 0,
-      duration: .5,
-      stagger: .065,
+      duration: isMobile ? .72 : .5,
+      stagger: isMobile ? .09 : .065,
       ease: 'back.out(1.7)',
       scrollTrigger: {
         trigger: section.querySelector('.skills-card'),

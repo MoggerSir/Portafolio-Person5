@@ -133,6 +133,19 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
     }, 3000);
   };
 
+  const focusOnHover = (index: number) => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (index === controller.state.activeIndex) return;
+    interactionPausedUntil.current = Number.POSITIVE_INFINITY;
+    if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
+    animate(index, 0.65);
+  };
+
+  const releaseHoverFocus = () => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    resumeMotion();
+  };
+
   const syncFromScroll = () => {
     if (scrollingByAnimation.current) return;
     if (scrollFrame.current !== null) window.cancelAnimationFrame(scrollFrame.current);
@@ -173,6 +186,8 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
               role="button"
               tabIndex={0}
               aria-label={`Abrir caso de estudio de ${project.name}`}
+              onMouseEnter={() => focusOnHover(index)}
+              onMouseLeave={releaseHoverFocus}
               onClick={() => {
                 controller.pause();
                 if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);

@@ -157,6 +157,28 @@ img { display: block; max-width: 100%; }
 .project-shade { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 12%, rgba(8,6,6,.15) 42%, rgba(8,6,6,.96) 86%); }
 .tone-ruby .project-shade { background: linear-gradient(to bottom, rgba(128,0,0,.05), rgba(8,6,6,.96) 84%); }
 .tone-coral .project-shade { background: linear-gradient(to bottom, rgba(224,90,95,.07), rgba(8,6,6,.96) 84%); }
+.tone-gold .project-shade { background: linear-gradient(to bottom, rgba(212,168,71,.1), rgba(8,6,6,.96) 84%); }
+.tone-gold {
+  border-color: rgba(240,197,110,.42);
+  box-shadow: 0 0 34px rgba(212,168,71,.18), 0 30px 70px rgba(0,0,0,.45);
+  transition: box-shadow .5s ease, border-color .5s ease;
+  animation: goldAura 7s var(--ease-organic) infinite;
+}
+.tone-gold .project-index {
+  background: linear-gradient(135deg, #f0c56e, #a8731f);
+  color: #241505;
+}
+.tone-gold .project-content > p { color: #f2cf8c; }
+@keyframes goldAura {
+  0%, 100% { box-shadow: 0 0 30px rgba(212,168,71,.16), 0 30px 70px rgba(0,0,0,.45); }
+  50% { box-shadow: 0 0 48px rgba(212,168,71,.3), 0 30px 70px rgba(0,0,0,.45); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tone-gold { animation: none; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .tone-gold:hover { border-color: rgba(240,197,110,.6); box-shadow: 0 0 64px rgba(212,168,71,.4), 0 36px 72px rgba(0,0,0,.46); }
+}
 .project-index { position: absolute; top: 20px; left: 20px; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: rgba(8,6,6,.55); backdrop-filter: blur(10px); font-size: .72rem; font-weight: 800; }
 .project-content { position: absolute; left: 24px; right: 24px; bottom: 24px; }
 .project-content > p { margin: 0 0 6px; color: #e4858b; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
