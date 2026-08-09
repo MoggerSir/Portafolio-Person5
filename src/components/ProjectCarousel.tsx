@@ -7,8 +7,6 @@ import { useGsapContext } from '../hooks/useGsapContext';
 import { ProjectCarouselController } from '../services/ProjectCarouselController';
 import { ProjectCaseStudy } from './ProjectCaseStudy';
 
-const AUTOPLAY_INTERVAL = 10_000;
-const AUTOPLAY_TRANSITION_DURATION = 1.5;
 const HOVER_FOCUS_DELAY = 450;
 const HOVER_FOCUS_TRANSITION_DURATION = 1.35;
 const HOVER_FOCUS_COOLDOWN = 3000;
@@ -23,7 +21,6 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const interactionPausedUntil = useRef(0);
   const resumeTimer = useRef<number | null>(null);
-  const autoplayTimer = useRef<number | null>(null);
   const scrollingByAnimation = useRef(false);
   const scrollFrame = useRef<number | null>(null);
   const hoverFocusTimer = useRef<number | null>(null);
@@ -89,44 +86,26 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
     setActiveIndex(index);
   }, [controller]);
 
-  const scheduleAutoplay = useCallback(function schedule(delay = AUTOPLAY_INTERVAL) {
-    if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
-    autoplayTimer.current = window.setTimeout(() => {
-      const remainingPause = interactionPausedUntil.current - Date.now();
-      if (remainingPause > 0) {
-        schedule(remainingPause);
-        return;
-      }
-      const state = controller.next();
-      animate(state.activeIndex, AUTOPLAY_TRANSITION_DURATION);
-      schedule(AUTOPLAY_INTERVAL);
-    }, delay);
-  }, [animate, controller]);
-
   useEffect(() => {
     animate(0);
-    scheduleAutoplay();
 
     return () => {
-      if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
       if (resumeTimer.current !== null) window.clearTimeout(resumeTimer.current);
       if (hoverFocusTimer.current !== null) window.clearTimeout(hoverFocusTimer.current);
       if (scrollFrame.current !== null) window.cancelAnimationFrame(scrollFrame.current);
       controller.destroy();
     };
-  }, [animate, controller, scheduleAutoplay]);
+  }, [animate, controller]);
 
   const move = (direction: 1 | -1) => {
     const state = direction === 1 ? controller.next() : controller.previous();
     animate(state.activeIndex);
-    scheduleAutoplay();
   };
 
   const pauseMotion = () => {
     interactionPausedUntil.current = Number.POSITIVE_INFINITY;
     scrollingByAnimation.current = false;
     controller.pause();
-    if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
   };
 
   const resumeMotion = () => {
@@ -135,7 +114,6 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
     resumeTimer.current = window.setTimeout(() => {
       interactionPausedUntil.current = 0;
       controller.resume();
-      scheduleAutoplay(0);
     }, 3000);
   };
 
@@ -148,7 +126,6 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
     // sweeping across the row doesn't yank the carousel between cards.
     hoverFocusTimer.current = window.setTimeout(() => {
       interactionPausedUntil.current = Number.POSITIVE_INFINITY;
-      if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
       animate(index, HOVER_FOCUS_TRANSITION_DURATION);
       // Lock out further hover-triggered focus changes for a beat after the
       // glide starts, so consecutive hovers can't chain into one another.
@@ -209,14 +186,12 @@ export function ProjectCarousel({ projects }: { projects: readonly Project[] }) 
               onMouseLeave={releaseHoverFocus}
               onClick={() => {
                 controller.pause();
-                if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
                 setSelectedProject(project);
               }}
               onKeyDown={(event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   event.preventDefault();
                   controller.pause();
-                  if (autoplayTimer.current !== null) window.clearTimeout(autoplayTimer.current);
                   setSelectedProject(project);
                 }
               }}

@@ -35,6 +35,29 @@ const source: PortfolioSource = {
         '/images/cases/nexo-aprobacion.webp',
       ],
     }),
+    new Project('rutas-cancun', 'Rutas Cancún', 'App de movilidad · Cancún', 'App para encontrar la ruta de camión o combi correcta en Cancún, con datos trazados con GPS por choferes reales.', '/images/rutas-cancun.webp', ['Flutter', 'NestJS', 'PostgreSQL', 'PostGIS'], 'gold', 'https://rutascancun.com/', undefined, {
+      overview: 'Rutas Cancún es una app móvil y web para encontrar, entre las más de 16 rutas de camiones y combis de la ciudad, cuál te lleva de tu punto de partida a tu destino y cómo llegar caminando hasta el punto de abordaje. Nace de un problema muy real de movilidad: en Cancún no existe información oficial y confiable sobre las rutas, así que investigamos a fondo el transporte público real de la ciudad para construir la base de datos de rutas más precisa posible.',
+      problem: 'Encontrar tu ruta de camión en Cancún depende hoy de preguntarle a alguien en la calle o de memoria: no hay una fuente oficial confiable de paradas, recorridos ni horarios, y los mapas genéricos no reflejan los desvíos y variantes reales de cada corredor. Investigamos rutas y fuentes públicas y documentamos ruta por ruta, pero confirmamos que la única forma de tener datos verdaderamente confiables era capturarlos directamente en calle con choferes reales operando sus unidades, no copiarlos de un mapa de referencia.',
+      process: [
+        'Investigamos a fondo las rutas de transporte público de Cancún cruzando fuentes públicas, mapas de referencia y entrevistas con operadores, documentando cada corredor (R1, R2, R4, R15, R17, R27…) antes de tocar código.',
+        'Diseñamos la arquitectura completa: backend NestJS con PostgreSQL/PostGIS y Flutter multiplataforma, y documentamos por escrito cada decisión que se desviaba del plan original —por ejemplo, sustituir Mapbox por OpenStreetMap y puntos preset en el MVP— junto con sus consecuencias reales para el usuario, dejando un registro auditable de decisiones de arquitectura.',
+        'Montamos un piloto de choferes reales: los reclutamos en terminales (ADO, Plaza Las Américas, Tierra Maya), les pagamos entre $50 y $70 MXN por trazar con GPS su ruta completa de ida y vuelta, y esa evidencia observada rectifica y valida el trazado oficial que ve el usuario final.',
+        'Construimos un sistema de reportes de incidentes alimentado por los propios usuarios, con clustering geoespacial y un umbral configurable para solo mostrarle al pasajero una alerta cuando hay evidencia suficiente y reciente, evitando ruido o falsos positivos.',
+        'Desplegamos el backend en Railway con Redis para caché y límite de peticiones, monitoreo con Sentry, y la app web en GitHub Pages vía CI, dejando el sistema listo para operar el piloto con choferes y usuarios reales.',
+      ],
+      stackDecisions: [
+        { technology: 'Flutter (app pasajero + app chofer)', reason: 'Una sola base de código para la app que usa el pasajero y la app que usan los choferes para trazar rutas con GPS, en Android, iOS y web.' },
+        { technology: 'NestJS + TypeORM', reason: 'Backend modular y tipado con guards, límite de peticiones y migraciones claras para un dominio con reglas de negocio (rutas, reportes, certificados de piloto).' },
+        { technology: 'PostgreSQL + PostGIS', reason: 'Modelo geoespacial para paradas, polilíneas de rutas y clustering de reportes de incidentes por cercanía real.' },
+        { technology: 'Redis', reason: 'Caché de rutas y catálogo, y límite de peticiones distribuido, sin bloquear las solicitudes principales de la API.' },
+        { technology: 'flutter_map + OpenStreetMap', reason: 'Mapa sin depender de un token de pago durante el MVP; decisión documentada explícitamente frente al plan original con Mapbox, junto con sus consecuencias.' },
+      ],
+      gallery: [
+        '/images/cases/rutas-lista.webp',
+        '/images/cases/rutas-recorrido.webp',
+        '/images/cases/rutas-pasoapaso.webp',
+      ],
+    }),
     new Project('larper-clothes', 'Larper Clothes', 'E-commerce conceptual', 'Moda alternativa presentada como una experiencia editorial, rápida y enfocada en producto.', '/images/larper-clothes.webp', ['Astro', 'React', 'GSAP', 'Three.js'], 'wine', 'https://larperchlothes.larpmusic.com.mx/', undefined, {
       overview: 'Una tienda editorial de ropa de segunda mano creada para estudiantes de Cancún. Cada prenda es única e incluye precio, talla, color, condición e historia, presentada mediante una experiencia visual cercana a una campaña de moda.',
       problem: 'La ropa de segunda mano suele publicarse en catálogos improvisados donde es difícil comparar estado, medidas y disponibilidad. El proyecto organiza inventario limitado y le da suficiente contexto visual a cada pieza para reducir dudas antes de contactar.',
